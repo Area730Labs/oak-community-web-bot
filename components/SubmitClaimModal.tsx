@@ -39,7 +39,7 @@ export default function SubmitClaimModal() {
           <ModalOverlay />
 
 
-          <ModalContent backgroundColor="#A4BFA7" maxW="540px" maxH="168px" minH="168px" border="1px" borderColor="#1D1F1D">
+          <ModalContent backgroundColor="#A4BFA7" maxW="540px" maxH="168px" minH="168px" border="1px" borderColor="#1D1F1D" boxShadow="-6px 6px 0px 0px #1d1f1d;" borderRadius="10px">
             <Text as="div" fontFamily={Config.fontA} fontSize="51px"color="#1D1F1D" marginTop="10px" marginLeft="20px">
                 Send a link to your Tweet
             </Text>
@@ -48,7 +48,7 @@ export default function SubmitClaimModal() {
             <Box className='close-btn' width="32px" height="32px" margin="10px" onClick={onClose} />
 
             <Box  display="flex" width="500px" margin="auto" textAlign="left" >
-                <Input ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px"
+                <Input ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px" borderRadius="10px"
                 _hover={{
                     backgroundColor: "#829A85",
                     borderColor: "#1D1F1D",
