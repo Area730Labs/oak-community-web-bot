@@ -13,8 +13,7 @@ import topleftimage from '../images/top_left.png'
 import bottomLeft from '../images/bottom_left_tree.png'
 import bottomRight from '../images/bottom_right.png'
 import topRight from '../images/top_right.png'
-
-
+import theme from '../components/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
     const network = WalletAdapterNetwork.Mainnet;
@@ -36,7 +35,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Img src={bottomLeft.src} position='absolute' bottom={0} left={0} />
             <Img src={bottomRight.src} position='absolute' bottom={0} right={0} />
             <Img src={topRight.src} position='absolute' top={0} right={0} /> */}
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <ConnectionProvider endpoint={endpoint}>
                     <WalletProvider wallets={wallets} >
                         <WalletModalProvider>

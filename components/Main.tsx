@@ -43,7 +43,7 @@ export default function Main() {
     // }
 
     return <>
-        <Container maxW='xl'>
+        <Container maxW='2xl' backgroundColor={Config.globalBgColor}>
             <Img src={titleTextImage.src} />
             <Step idx={1}>
                 Like, retweet, reply and follow a new Oak’s twitter post.
