@@ -10,27 +10,13 @@ import { useState, useEffect } from 'react';
 
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { Box } from '@chakra-ui/react';
+import Main from '../components/Main';
 
 const Home: NextPage = () => {
-  // const { connecting, publicKey } = useWallet();
-  const [nfts, setNfts] = useState([]);
-
-  const publicAddress = "DYNNwUKPjhnHuFi3y6ERVBvwidiBALZC96A2VnWZrYiD";
-  
-  // if (publicKey) {
-  //   const fetchNfts = async () => {
-  //     const nftArray = await getParsedNftAccountsByOwner({
-  //       publicAddress,
-  //     });
-
-  //     console.log(nftArray);
-  //   };
-
-  //   fetchNfts();
-  // }
 
   return (
-    <WalletMultiButton />
+    <Main />
   )
 }
 
