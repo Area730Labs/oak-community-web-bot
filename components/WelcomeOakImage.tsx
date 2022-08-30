@@ -3,11 +3,15 @@ import { Box, Img } from "@chakra-ui/react";
 const boxSize = 90;
 const boxSizePx = boxSize + "px";
 
-export default function WelcomeOakImage(props : {src: string}) {
+export default function WelcomeOakImage(props: { src: string }) {
     return <Box
         width={boxSizePx}
         height={boxSizePx}
+        position="absolute"
+        left="1.97%"
+        top="12.5%"
+        bottom="12.5%"
     >
-        <Img src={props.src}/>
+        <Img src={props.src} />
     </Box>
 }

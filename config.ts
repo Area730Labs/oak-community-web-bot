@@ -1,6 +1,6 @@
 const  Config =  {
     "fontA" : "StoryOfAlundra",
-    "fontB" : "Verdana",
+    "fontB" : "GolosUi",
     "globalBgColor": "#7C9B80"
 }
 
