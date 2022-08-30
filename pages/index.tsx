@@ -12,11 +12,12 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Box } from '@chakra-ui/react';
 import Main from '../components/Main';
+import { HowItWorksButton } from '../components/HowItWorks';
 
 const Home: NextPage = () => {
 
   return (
-    <Main />
+      <Main />
   )
 }
 

@@ -14,6 +14,7 @@ import bottomLeftBranchImg from '../images/bottom_left_branch.png';
 import topLeftImg from '../images/top_left.png';
 import topRightImg from '../images/top_right.png';
 import Header from "./Header";
+import { HowItWorksButton } from "./HowItWorks";
 
 
 export default function Main() {
@@ -77,6 +78,7 @@ export default function Main() {
 
     return <>
         <Header />
+        <HowItWorksButton />
         <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />
             <Box textAlign="left" fontSize="16px" fontFamily={Config.fontB}>
