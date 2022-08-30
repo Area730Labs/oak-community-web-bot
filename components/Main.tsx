@@ -8,6 +8,13 @@ import Step from "./Step";
 import WelcomeOakImage from "./WelcomeOakImage";
 import WelcomeOakRow, { WelcomeItem } from "./WelcomeOakRow";
 import DefaultNftImage from "../images/nft_image_1.png";
+import bottomRightImg from '../images/bottom_right.png';
+import bottomRightSkullImg from '../images/bottom_right_skull.png';
+import bottomLefttImg from '../images/bottom_left_tree.png';
+import bottomLeftBranchImg from '../images/bottom_left_branch.png';
+import topLeftImg from '../images/top_left.png';
+import topRightImg from '../images/top_right.png';
+
 
 export default function Main() {
 
@@ -63,7 +70,7 @@ export default function Main() {
     ];
 
     return <>
-        <Box width="760px" textAlign="center" margin="0 auto">
+        <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />
             <Box textAlign="left" fontSize="16px" fontFamily={Config.fontB}>
                 <Step idx={1}>
@@ -108,5 +115,16 @@ export default function Main() {
 
             <WalletConnectButton />
         </Box>
+
+
+
+        <Img src={topLeftImg.src} className='top-l-img-bg' />
+        <Img src={topRightImg.src} className='top-r-img-bg' />
+
+
+        <Img src={bottomRightImg.src} className='btm-r-img-bg' />
+        <Img src={bottomRightSkullImg.src} className='btm-r-img-bg' />
+        <Img src={bottomLefttImg.src} className='btm-l-img-bg' />
+        <Img src={bottomLeftBranchImg.src} className='btm-l-img-bg' />
     </>
 }

@@ -34,3 +34,39 @@ a {
     background: black;
   }
 }
+
+
+
+.btm-r-img-bg {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+}
+
+.btm-l-img-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.top-l-img-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.top-r-img-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 0;
+}
+
+
+.main-overlay-c {
+  position: relative;
+  z-index: 3;
+}
