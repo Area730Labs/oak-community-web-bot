@@ -1,14 +1,40 @@
-import { Box, Img } from "@chakra-ui/react";
+import { Box, Img, Text } from "@chakra-ui/react";
 import OakButton from "../images/oak_btn_topleft.png";
-import ConnectWalletBtnImage from "../images/connect_wallet.png";
+import ConnectWalletBtnImage from "../images/connect_wallet_btn.svg";
 import SocialBtn from "./SocialBtn";
-
+import Config from "../config";
 import twitterBtnImage from '../images/tw_button.png';
 import discordBtnImage from '../images/discord_button.png';
+import { useWallet } from "@solana/wallet-adapter-react";
+import { disconnect } from "process";
+import { relative } from "path";
+import { MultiButton } from "./MultiBtn";
 
 const socialButtonTopOffset = "38px";
 
 export default function Header() {
+    const { connecting, connect, publicKey, connected, signMessage, disconnect } = useWallet();
+
+
+    let btnLabel = "CONNECT WALLET";
+    if (connecting) {
+        btnLabel = "CONNECTING";
+    }
+
+    if (connected && publicKey) {
+        btnLabel = "DISCONNECT WALLET";
+    }
+
+    const btnAction = () => {
+        if (!connected) {
+            connect();
+        }
+
+        if (connected) {
+            disconnect();
+        }
+    };
+
     return <Box
         height="120px"
         display="flex"
@@ -22,8 +48,8 @@ export default function Header() {
         <SocialBtn image={twitterBtnImage.src} position="absolute" right="240px" top={socialButtonTopOffset} />
         <SocialBtn image={discordBtnImage.src} position="absolute" right="300px" top={socialButtonTopOffset} />
 
-        <Box position="absolute" height="95px" zIndex={150} right="10px" top="0px">
-            <Img src={ConnectWalletBtnImage.src} height="100%" />
-        </Box>
+        <MultiButton/>
+
+        
     </Box>
 }

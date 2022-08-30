@@ -16,25 +16,19 @@ import topRight from '../images/top_right.png'
 import theme from '../components/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const network = WalletAdapterNetwork.Mainnet;
+    const network = WalletAdapterNetwork.Devnet;
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
     const wallets = useMemo(
         () => [
             new SolflareWalletAdapter(),
-            new PhantomWalletAdapter()
+            new PhantomWalletAdapter(),
         ],
         []
     );
 
     return (
         <>
-            {/* <Box position='absolute' top={0} left={0}>
-                <Img src={topleftimage.src}  />
-            </Box>
-            <Img src={bottomLeft.src} position='absolute' bottom={0} left={0} />
-            <Img src={bottomRight.src} position='absolute' bottom={0} right={0} />
-            <Img src={topRight.src} position='absolute' top={0} right={0} /> */}
             <ChakraProvider theme={theme}>
                 <ConnectionProvider endpoint={endpoint}>
                     <WalletProvider wallets={wallets} >

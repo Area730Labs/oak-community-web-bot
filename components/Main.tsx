@@ -119,7 +119,6 @@ export default function Main() {
                 </TabPanels>
             </Tabs>
 
-            <WalletConnectButton />
         </Box>
 
 
