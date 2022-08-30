@@ -47,6 +47,7 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: Welco
         boxShadow="-6px 6px 0px 0px #1D1F1D"
         borderRadius="10px"
         width="760px"
+        _even={{backgroundColor:"#9CB795"}}
         height="120px"
         position="relative"
 
@@ -56,7 +57,6 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: Welco
         <RowTextColumn left="224px"><TxLink tx={props.item.tx}/></RowTextColumn>
         <RowTextColumn left="350px"><Moment unix fromNow>{props.item.claimed_at}</Moment></RowTextColumn>
         <RowTextColumn left="480px">{props.item.bought_for} SOL</RowTextColumn>
-
         <TweetBtn position="absolute" left="calc(50% - 182px/2 + 269px)" top="28.33%" fontSize="12px" />
     </Box>
 
