@@ -80,3 +80,26 @@ a {
 .scrol-l {
   margin-right: 40px;
 }
+
+.claim-modal {
+  background-color: #A4BFA7;
+  width: 540px;
+  height: 168px;
+  display: block;
+  margin: auto;
+  position: relative;
+}
+
+.close-btn {
+  background-image: url(/img/close_btn.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.send-btn {
+  background-image: url(/img/send_btn.svg);
+}
