@@ -70,3 +70,13 @@ a {
   position: relative;
   z-index: 3;
 }
+
+.box-with-scroll {
+  background-image: url(/img/scroll.svg);
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.scrol-l {
+  margin-right: 40px;
+}
