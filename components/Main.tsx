@@ -46,7 +46,11 @@ export default function Main() {
     // }
 
     const defaultWelcomeItem: WelcomeItem = {
-        ImageSrc: DefaultNftImage.src
+        ImageSrc: DefaultNftImage.src,
+        id: "3237",
+        tx: "4dACD5w78vhKznU2iaqneNfEPGxUicCCeBZNbJhe3PBZpk7QyCrUvrVfXwPVumFv7URjjQmNu6mmCKwPm1K8XXQt",
+        claimed_at: (new Date().getTime() / 1000) - 83832,
+        bought_for: 2.53
     }
 
     const items: WelcomeItem[] = [
@@ -92,8 +96,6 @@ export default function Main() {
                                 return <WelcomeOakRow key={idx} item={it} />
                             })}
                         </VStack>
-
-
                     </TabPanel>
                     <TabPanel>
                         <p>two!</p>
