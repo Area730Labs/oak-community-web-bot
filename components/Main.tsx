@@ -5,7 +5,6 @@ import { useState } from "react";
 import Config from "../config";
 import titleTextImage from '../images/welcome_to_paradise.png';
 import Step from "./Step";
-import WelcomeOakImage from "./WelcomeOakImage";
 import WelcomeOakRow, { WelcomeItem } from "./WelcomeOakRow";
 import DefaultNftImage from "../images/nft_image_1.png";
 import bottomRightImg from '../images/bottom_right.png';
@@ -14,6 +13,7 @@ import bottomLefttImg from '../images/bottom_left_tree.png';
 import bottomLeftBranchImg from '../images/bottom_left_branch.png';
 import topLeftImg from '../images/top_left.png';
 import topRightImg from '../images/top_right.png';
+import Header from "./Header";
 
 
 export default function Main() {
@@ -69,7 +69,14 @@ export default function Main() {
         defaultWelcomeItem
     ];
 
+    const tabContent = !connected ?
+        <Text color="#1D1F1D" fontFamily={Config.fontB} fontSize={18}>Please connect your wallet</Text> :
+        <>
+            <Text>Connected</Text>
+        </>;
+
     return <>
+        <Header />
         <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />
             <Box textAlign="left" fontSize="16px" fontFamily={Config.fontB}>
@@ -97,18 +104,15 @@ export default function Main() {
                 </TabList>
 
                 <TabPanels>
+                    <TabPanel>
+                        {tabContent}
+                    </TabPanel>
                     <TabPanel paddingX={0}>
                         <VStack spacing={4}>
                             {items.map((it, idx) => {
                                 return <WelcomeOakRow key={idx} item={it} />
                             })}
                         </VStack>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>two!</p>
-                    </TabPanel>
-                    <TabPanel>
-                        <p>three!</p>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

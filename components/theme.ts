@@ -5,6 +5,9 @@ const theme = extendTheme({
         global: (props) => ({
             body: {
                 bg: (props) => "#7C9B80"
+            },
+            colors: {
+                borderColor : "#75615A"
             }
         })
     },
