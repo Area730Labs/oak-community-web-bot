@@ -73,6 +73,8 @@ export default function Main() {
 
     const [curMint, setCurMint] = useState('');
 
+    const [forceUpdate, setForceUpdate] = useState(false);
+
     useEffect(() => {
         if (walletMints.length > 0) {
             const api = new Api();
@@ -96,7 +98,7 @@ export default function Main() {
                 console.error('unable to get unclaimed mints response : ', e.message)
             })
         }
-    }, [tokensChanges]);
+    }, [tokensChanges, forceUpdate]);
 
 
     useEffect(() => {
@@ -106,7 +108,7 @@ export default function Main() {
         }).catch((e) => {
             toast.error('Unable to load welome oaks')
         }) 
-    }, [])
+    }, [forceUpdate])
 
     const [isHowItworks, setIsHowItWorks ] = useState(true);
 
@@ -164,6 +166,8 @@ export default function Main() {
                 })
             } catch (e) {
                 toast.warn("Sign request rejected")
+            } finally {
+                setForceUpdate(!forceUpdate);
             }
 
         })()
