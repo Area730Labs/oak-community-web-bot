@@ -1,7 +1,8 @@
 import { Box, ChakraProps, Img, Text } from "@chakra-ui/react";
 
 export interface SocialBtnProps extends ChakraProps {
-    image: string
+    image: string,
+    url: string
 }
 
 const BtnSize = 44;
@@ -24,7 +25,7 @@ export default function SocialBtn(props: SocialBtnProps) {
         cursor="pointer"
         {...props}
     >
-        <Box width="25px" height="20px" flex="none" order="0" flexGrow="0">
+        <Box width="25px" height="20px" flex="none" order="0" flexGrow="0" onClick={() => window.open(props.url, '_blank')}>
             <Img src={props.image} />
         </Box>
     </Box>

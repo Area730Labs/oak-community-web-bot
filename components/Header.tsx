@@ -46,8 +46,8 @@ export default function Header() {
             <Img src={OakButton.src} height="100%" />
         </Box>
 
-        <SocialBtn image={twitterBtnImage.src} position="absolute" right="240px" top={socialButtonTopOffset} />
-        <SocialBtn image={discordBtnImage.src} position="absolute" right="300px" top={socialButtonTopOffset} />
+        <SocialBtn image={twitterBtnImage.src} position="absolute" right="240px" top={socialButtonTopOffset} url='https://twitter.com/OakParadiseNFT' />
+        <SocialBtn image={discordBtnImage.src} position="absolute" right="300px" top={socialButtonTopOffset} url='https://discord.gg/oakdystopia' />
 
         <MultiButton/>
 
