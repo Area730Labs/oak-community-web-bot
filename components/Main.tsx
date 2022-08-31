@@ -143,9 +143,9 @@ export default function Main() {
                 </Step>
             </Box>
             <Tabs>
-                <TabList fontFamily={Config.fontA} fontWeight="bolder" lineHeight="39.2px">
-                    <Tab fontSize="32px">Claim Oak</Tab>
-                    <Tab fontSize="32px">Welcome Oak</Tab>
+                <TabList fontFamily={Config.fontA} fontWeight="bolder" lineHeight="39.2px" borderColor='#75615A'>
+                    <Tab fontSize="32px" _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Claim Oak</Tab>
+                    <Tab fontSize="32px"  _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Welcome Oak</Tab>
                 </TabList>
 
                 <TabPanels>
