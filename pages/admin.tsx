@@ -65,11 +65,13 @@ const Admin: NextPage = () => {
     const selectWinnerAction = async (row_id) => {
         onOpen();
 
-        const data = {
-            'wallet': 'ezEK5sLT65vHT9ZmaXkZ5Q2oErinj6m8Ue2qZNhT6f6',
-            'row_id': row_id
-        };
-        try {      
+      
+        try {    
+            const data = {
+                'wallet': publicKey.toString(),
+                'row_id': row_id
+            };
+
             const message = new TextEncoder().encode(JSON.stringify(data));
             const signature = await signMessage(message);
             const base64str = Buffer.from(signature).toString('base64');
@@ -104,9 +106,10 @@ const Admin: NextPage = () => {
         onOpen();
 
         const data = {
-            'wallet': 'ezEK5sLT65vHT9ZmaXkZ5Q2oErinj6m8Ue2qZNhT6f6',
-            'row_id': row_id
+                'wallet': publicKey.toString(),
+                'row_id': row_id
         };
+        
         try {      
             const message = new TextEncoder().encode(JSON.stringify(data));
             const signature = await signMessage(message);
