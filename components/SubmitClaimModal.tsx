@@ -51,7 +51,7 @@ export default function SubmitClaimModal(props) {
             <Box className='close-btn' width="32px" height="32px" margin="10px" onClick={props.onClose} />
 
             <Box  display="flex" width="500px" margin="auto" textAlign="left" >
-                <Input value={value} pattern='https://.*' type='url' ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px" borderRadius="10px"
+                <Input onChange={handleChange} value={value} pattern='https://.*' type='url' ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px" borderRadius="10px"
                 _hover={{
                     backgroundColor: "#829A85",
                     borderColor: "#1D1F1D",
