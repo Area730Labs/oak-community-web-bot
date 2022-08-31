@@ -16,9 +16,11 @@ import { HowItWorksButton } from "./HowItWorks";
 import { Connection } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import HowItWorks from "./HowItWorks";
-import Api, { OakRaidRequest } from "../api";
+import Api, { OakRaidRequest, ClaimOakForm } from "../api";
 import NotClaimedItem, { NotClaimedItemInterface } from "./NotClaimedItem";
 import { toast } from "react-toastify";
+import { useDisclosure } from '@chakra-ui/react'
+import SubmitClaimModal from "./SubmitClaimModal";
 
 export interface ApiRespItemCondensed {
     mint: string,
@@ -69,6 +71,8 @@ export default function Main() {
         }
     }, [publicNode, connected])
 
+    const [curMint, setCurMint] = useState('');
+
     useEffect(() => {
         if (walletMints.length > 0) {
             const api = new Api();
@@ -105,6 +109,8 @@ export default function Main() {
     }, [])
 
     const [isHowItworks, setIsHowItWorks ] = useState(true);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
    
     const tabContent = !connected ?
         <Text color="#1D1F1D" fontFamily={Config.fontB} fontSize={18}>Please connect your wallet</Text> :
@@ -114,7 +120,11 @@ export default function Main() {
                 const item: NotClaimedItemInterface = {
                     ImageSrc: it.data.image,
                     id: it.data.name.split("#")[1],
-                    mint: it.mint
+                    mint: it.mint,
+                    onClick: () => {
+                        setCurMint(it.mint);
+                        onOpen();
+                    }
                 };
 
                 return <NotClaimedItem key={key} item={item} />
@@ -132,9 +142,37 @@ export default function Main() {
         );
     }
 
+    const claimHandler = (tweet_url) => {
+        const form: ClaimOakForm = {
+            wallet: publicKey.toString(),
+            mint: curMint,
+            tweet_url
+        };
+
+        (async () => {
+
+            try {
+                const message = new TextEncoder().encode(JSON.stringify(form));
+                const signature = await signMessage(message);
+                const sigb64 = Buffer.from(signature).toString('base64');
+
+                const api = new Api();
+                api.claim_oak(form, sigb64).then((resp) => {
+                    toast.info('sent claim request');
+                }).catch(e => {
+                    toast.error('error: ' + e.message);
+                })
+            } catch (e) {
+                toast.warn("Sign request rejected")
+            }
+
+        })()
+    };
+
 
     return <>
         <Header />
+        <SubmitClaimModal isOpen={isOpen} onClose={onClose} onSubmit={claimHandler}/>
         <HowItWorksButton onClick={setIsHowItWorks} />
         <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />

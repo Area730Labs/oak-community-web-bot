@@ -9,31 +9,34 @@ import {
   } from '@chakra-ui/react'
 import Config from "../config";
 
-import React from 'react'
+import React, {useState} from 'react'
 import { useDisclosure } from '@chakra-ui/react'
 
-export default function SubmitClaimModal() {
-    const { isOpen, onOpen, onClose } = useDisclosure()
-  
+export default function SubmitClaimModal(props) {
+
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
+    const [value, setValue] = useState('')
+    const handleChange = (event) => setValue(event.target.value);
 
-    const submitBtn = () => {
-        alert("Submitted");
+    const actionHandler = () => {
+      if (!value.startsWith('https://twitter.com/')) {
+        return;
+      }
+
+      props.onSubmit(value);
+      props.onClose();
+
+      setValue('');
     };
   
     return (
       <>
-        <Button onClick={onOpen}>Open Modal</Button>
-        <Button ml={4} ref={finalRef}>
-          I&lsquo;ll receive focus on close
-        </Button>
-  
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={props.isOpen}
+          onClose={props.onClose}
           isCentered
         >
           <ModalOverlay />
@@ -45,10 +48,10 @@ export default function SubmitClaimModal() {
             </Text>
 
 
-            <Box className='close-btn' width="32px" height="32px" margin="10px" onClick={onClose} />
+            <Box className='close-btn' width="32px" height="32px" margin="10px" onClick={props.onClose} />
 
             <Box  display="flex" width="500px" margin="auto" textAlign="left" >
-                <Input ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px" borderRadius="10px"
+                <Input onChange={handleChange} value={value} pattern='https://.*' type='url' ref={initialRef}  backgroundColor="#829A85" borderColor="#1D1F1D" color="#1D1F1D" height="45px" maxW="400px" borderRadius="10px"
                 _hover={{
                     backgroundColor: "#829A85",
                     borderColor: "#1D1F1D",
@@ -60,7 +63,7 @@ export default function SubmitClaimModal() {
                 }}
                 />
 
-                <Box className='send-btn' width="80px" height="45px" marginLeft="20px" cursor="pointer" onClick={submitBtn} />
+                <Box className='send-btn' width="80px" height="45px" marginLeft="20px" cursor="pointer" onClick={actionHandler} />
             </Box>
 
           </ModalContent>
