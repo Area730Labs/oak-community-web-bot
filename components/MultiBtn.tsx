@@ -1,13 +1,10 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import type { FC, ReactNode } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { WalletIcon, WalletConnectButton, useWalletModal, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { WalletModalButton } from '@solana/wallet-adapter-react-ui';
-import { Button, ChakraProps, position } from '@chakra-ui/react';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { ChakraProps } from '@chakra-ui/react';
 import { Box, Text, Img } from '@chakra-ui/react';
 import ConnectWalletBtnImage from "../images/connect_wallet_btn.svg";
 import Config from '../config';
-import { toast } from 'react-toastify';
 
 export interface MultiButtonProps extends ChakraProps {
     children: string
@@ -20,7 +17,7 @@ export interface WalletButtonImageProps extends ChakraProps {
 
 const WalletButtonImage = (props: WalletButtonImageProps) => {
 
-    let {children, ... rest} = props;
+    let { children, ...rest } = props;
 
     return <Box
         position="absolute"
@@ -39,7 +36,7 @@ const WalletButtonImage = (props: WalletButtonImageProps) => {
 }
 
 
-export const WalletModalButtonOverride = ({ children = 'Select Wallet', onClick, ...props }) => {
+export const WalletModalButtonOverride = ({ children = 'SELECT WALLET', onClick, ...props }) => {
     const { visible, setVisible } = useWalletModal();
 
     const handleClick = useCallback(
@@ -50,7 +47,7 @@ export const WalletModalButtonOverride = ({ children = 'Select Wallet', onClick,
         [onClick, setVisible, visible]
     );
 
-    return <WalletButtonImage>{children}</WalletButtonImage>;
+    return <WalletButtonImage onClick={handleClick}>{children}</WalletButtonImage>;
 };
 
 const WalletConnectButtonOverride = ({ children, onClick, ...props }) => {
@@ -66,10 +63,10 @@ const WalletConnectButtonOverride = ({ children, onClick, ...props }) => {
 
     const content = useMemo(() => {
         if (children) return children;
-        if (connecting) return 'Connecting ...';
-        if (connected) return 'Connected';
-        if (wallet) return 'Connect';
-        return 'Connect Wallet';
+        if (connecting) return 'CONNECTING ...';
+        if (connected) return 'CONNECTED';
+        if (wallet) return 'CONNECT';
+        return 'CONNECT WALLET';
     }, [children, connecting, connected, wallet]);
 
     return (
@@ -87,11 +84,7 @@ export const MultiButton = (props: MultiButtonProps) => {
 
     let { children, ...rest } = props;
 
-    // return <Box position="relative">
-    //     <WalletMultiButton/>;
-    // </Box>
-
-    const { publicKey, wallet, disconnect } = useWallet();
+    const { publicKey, wallet, disconnect,connected } = useWallet();
     const { setVisible } = useWalletModal();
     const [copied, setCopied] = useState(false);
     const [active, setActive] = useState(false);
@@ -147,38 +140,14 @@ export const MultiButton = (props: MultiButtonProps) => {
     if (!wallet) return <WalletModalButtonOverride onClick={null}>{children}</WalletModalButtonOverride>;
     if (!base58) return <WalletConnectButtonOverride onClick={null}>{children}</WalletConnectButtonOverride>;
 
-    let btnLabel = "CONNECT WALLET";
+    let btnLabel = connected ? "DISCONNECT" : "CONNECT WALLET";
 
-    return <WalletButtonImage>{btnLabel}</WalletButtonImage>
-
-    /* <div className="wallet-adapter-dropdown">
-         <Button
-             aria-expanded={active}
-             className="wallet-adapter-button-trigger"
-             style={{ pointerEvents: active ? 'none' : 'auto', ...props.style }}
-             onClick={openDropdown}
-             startIcon={<WalletIcon wallet={wallet} />}
-             {...props}
-         >
-             {content}
-         </Button>
-         <ul
-             aria-label="dropdown-list"
-             className={`wallet-adapter-dropdown-list ${active && 'wallet-adapter-dropdown-list-active'}`}
-             ref={ref}
-             role="menu"
-         >
-             <li onClick={copyAddress} className="wallet-adapter-dropdown-list-item" role="menuitem">
-                 {copied ? 'Copied' : 'Copy address'}
-             </li>
-             <li onClick={openModal} className="wallet-adapter-dropdown-list-item" role="menuitem">
-                 Change wallet
-             </li>
-             <li onClick={disconnect} className="wallet-adapter-dropdown-list-item" role="menuitem">
-                 Disconnect
-             </li>
-         </ul>
-     </div> 
- ); */
+    return <WalletButtonImage onClick={() => {
+        if (connected) {
+            disconnect();
+        } else {
+           openModal()
+        }
+    }}>{btnLabel}</WalletButtonImage>
 
 };
