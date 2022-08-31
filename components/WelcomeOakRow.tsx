@@ -28,7 +28,7 @@ function TxLink(props: {tx: string}) {
 
     const linkHref = "https://solscan.io/tx/"+props.tx;
 
-    return <Link href={linkHref}>{linkText}...</Link>
+    return <Link  target='_blank' href={linkHref}>{linkText}...</Link>
 }
 
 export default function WelcomeOakRow(props: { children?: ReactNode, item: OakRaidRequest }) {
@@ -51,7 +51,7 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: OakRa
         <RowTextColumn left="135px">#{itemId}</RowTextColumn>
         <RowTextColumn left="224px"><TxLink tx={props.item.tx_sig}/></RowTextColumn>
         <RowTextColumn left="350px"><Moment unix fromNow>{props.item.claim_time}</Moment></RowTextColumn>
-        <RowTextColumn left="480px">{props.item.price} SOL</RowTextColumn>
+        <RowTextColumn left="480px">{props.item.price.toFixed(2)} SOL</RowTextColumn>
         <TweetBtn position="absolute" left="calc(50% - 182px/2 + 269px)" top="28.33%" fontSize="12px" link={props.item.tweet_url} />
     </Box>
 
