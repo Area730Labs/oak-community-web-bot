@@ -1,7 +1,7 @@
 import { Box, Container, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletConnectButton } from "@solana/wallet-adapter-react-ui";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Config from "../config";
 import titleTextImage from '../images/welcome_to_paradise.png';
 import Step from "./Step";
@@ -36,39 +36,41 @@ export default function Main() {
 
     const [notClaimedItems, setNotClaimedItems] = useState<ApiRespItemCondensed[]>([]);
     const [unclaimedChanges, setUnclaimedChanges] = useState(0);
+
+    const [items, setItems] = useState<WelcomeItem[]>([]);
+
     const publicNode = useMemo(() => {
         return new Connection('https://api.mainnet-beta.solana.com');
     }, [])
 
-    useMemo(async () => {
+    useEffect(() => {
         if (connected && publicNode != null) {
 
-            let tokens = await publicNode.getParsedTokenAccountsByOwner(publicKey, {
+            publicNode.getParsedTokenAccountsByOwner(publicKey, {
                 programId: TOKEN_PROGRAM_ID,
-            })
+            }).then((tokens) => {
+                var result = [];
 
-            var result = [];
+                for (const tokenInfo of tokens.value) {
 
-            for (const tokenInfo of tokens.value) {
+                    const tokenInfoParsed = tokenInfo.account.data.parsed.info;
+                    const tokenAm = tokenInfoParsed.tokenAmount;
 
-                const tokenInfoParsed = tokenInfo.account.data.parsed.info;
-                const tokenAm = tokenInfoParsed.tokenAmount;
-
-                if (tokenAm.uiAmount == 1 && tokenAm.decimals == 0) {
-                    result.push(tokenInfoParsed.mint);
+                    if (tokenAm.uiAmount == 1 && tokenAm.decimals == 0) {
+                        result.push(tokenInfoParsed.mint);
+                    }
                 }
-            }
 
-            setWalletMints(result);
-            setTokenChanges(tokensChanges + 1);
-
+                setWalletMints(result);
+                setTokenChanges(tokensChanges + 1);
+            })
         } else {
             setWalletMints([]);
             setTokenChanges(tokensChanges + 1);
         }
     }, [publicNode, connected])
 
-    useMemo(() => {
+    useEffect(() => {
         if (walletMints.length > 0) {
             const api = new Api();
             api.get_unclaimed_mints(publicKey, walletMints).then((respdata) => {
@@ -93,23 +95,34 @@ export default function Main() {
         }
     }, [tokensChanges]);
 
-    const defaultWelcomeItem: WelcomeItem = {
-        ImageSrc: DefaultNftImage.src,
-        id: "3237",
-        tx: "4dACD5w78vhKznU2iaqneNfEPGxUicCCeBZNbJhe3PBZpk7QyCrUvrVfXwPVumFv7URjjQmNu6mmCKwPm1K8XXQt",
-        claimed_at: (new Date().getTime() / 1000) - 83832,
-        bought_for: 2.53
-    }
 
-    const items: WelcomeItem[] = [
-        defaultWelcomeItem,
-        defaultWelcomeItem,
-        defaultWelcomeItem,
-        defaultWelcomeItem,
-        defaultWelcomeItem,
-        defaultWelcomeItem
-    ];
+    useEffect(() => {
+        const api = new Api();
+        api.get_oak_raid_requests().then((items) => {
 
+            let itemsArr = [];
+
+            for (const item of items) {
+
+                try {
+                    let it: WelcomeItem = {
+                        ImageSrc: item.image_url,
+                        id: item.nft_name.split("#")[1],
+                        tx: item.tx_sig,
+                        claimed_at: item.claim_time,
+                        bought_for: item.price
+                    }
+
+                    itemsArr.push(it);
+                } catch (e) {
+                    console.log('got an issue with some item',item)
+                }
+            }
+
+            setItems(itemsArr);
+        })
+    })
+   
     const tabContent = !connected ?
         <Text color="#1D1F1D" fontFamily={Config.fontB} fontSize={18}>Please connect your wallet</Text> :
         <>

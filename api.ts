@@ -44,6 +44,16 @@ class Api {
         }
     }
 
+    async get_oak_raid_requests(): Promise<OakRaidRequest[]> {
+
+        try {
+            let result = await this.sendRequest("get", `get_oak_raid_requests`);
+            return result;
+        } catch (e) {
+            throw e;
+        }
+    }
+
     async claim_oak(form : ClaimOakForm, signature : string): Promise<any> {
 
         try {
@@ -86,6 +96,16 @@ export interface ClaimOakForm {
         wallet : string
         mint: string,
         tweet_url: string
+}
+
+export interface OakRaidRequest {
+    tweet_url: string,
+    price: number,
+    nft_name : string,
+    image_url: string,
+    tx_sig: string,
+    claim_time: number, 
+    is_over: boolean
 }
 
 export default Api;
