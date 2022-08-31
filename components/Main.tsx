@@ -203,8 +203,6 @@ export default function Main() {
 
         <Img src={topLeftImg.src} className='top-l-img-bg' />
         <Img src={topRightImg.src} className='top-r-img-bg' />
-
-
         <Img src={bottomRightImg.src} className='btm-r-img-bg' />
         <Img src={bottomRightSkullImg.src} className='btm-r-img-bg' />
         <Img src={bottomLefttImg.src} className='btm-l-img-bg' />
