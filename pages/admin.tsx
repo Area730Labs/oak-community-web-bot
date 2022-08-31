@@ -90,7 +90,7 @@ const Admin: NextPage = () => {
                 body: JSON.stringify(payload)
             })).json();
 
-            if (winnerRes['error']) {
+            if (Object.hasOwn(winnerRes, 'error')) {
                 alert('Error');
             } else {
                 await getData();
@@ -129,7 +129,7 @@ const Admin: NextPage = () => {
                 body: JSON.stringify(payload)
             })).json();
 
-            if (winnerRes['error']) {
+            if (Object.hasOwn(winnerRes, 'error')) {
                 alert('Error');
             } else {
                 await getData();
