@@ -11,41 +11,15 @@ export interface NotClaimedItemInterface {
     ImageSrc: string
     id: string
     mint: string
+    onClick: any
 }
 
 export default function NotClaimedItem(props: { children?: ReactNode, item: NotClaimedItemInterface }) {
 
     const { publicKey, signMessage } = useWallet();
 
-    const claimHandler = () => {
+    
 
-        const tweet_url = prompt('enter tweet url');
-
-        const form: ClaimOakForm = {
-            wallet: publicKey.toString(),
-            mint: props.item.mint,
-            tweet_url
-        };
-
-        (async () => {
-
-            try {
-                const message = new TextEncoder().encode(JSON.stringify(form));
-                const signature = await signMessage(message);
-                const sigb64 = Buffer.from(signature).toString('base64');
-
-                const api = new Api();
-                api.claim_oak(form, sigb64).then((resp) => {
-                    toast.info('sent claim request');
-                }).catch(e => {
-                    toast.error('error: ' + e.message);
-                })
-            } catch (e) {
-                toast.warn("Sign request rejected")
-            }
-
-        })()
-    }
 
     return <Box
         boxSizing="border-box"
@@ -61,7 +35,7 @@ export default function NotClaimedItem(props: { children?: ReactNode, item: NotC
     >
         <WelcomeOakImage src={props.item.ImageSrc} />
         <RowTextColumn left="135px">#{props.item.id}</RowTextColumn>
-        <ClaimBtn position="absolute" left="250px" top="28.33%" fontSize="12px" onClick={claimHandler} />
+        <ClaimBtn position="absolute" left="250px" top="28.33%" fontSize="12px" onClick={() => props.item.onClick(props.item.mint)} />
     </Box>
 
 }
