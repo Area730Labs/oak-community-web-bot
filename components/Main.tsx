@@ -15,7 +15,7 @@ import Header from "./Header";
 import { HowItWorksButton } from "./HowItWorks";
 import { Connection } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
-
+import HowItWorks from "./HowItWorks";
 import Api, { OakRaidRequest } from "../api";
 import NotClaimedItem, { NotClaimedItemInterface } from "./NotClaimedItem";
 import { toast } from "react-toastify";
@@ -102,7 +102,9 @@ export default function Main() {
         }).catch((e) => {
             toast.error('Unable to load welome oaks')
         }) 
-    })
+    }, [])
+
+    const [isHowItworks, setIsHowItWorks ] = useState(true);
    
     const tabContent = !connected ?
         <Text color="#1D1F1D" fontFamily={Config.fontB} fontSize={18}>Please connect your wallet</Text> :
@@ -121,10 +123,19 @@ export default function Main() {
 
         const [tabIndex, setTabIndex] = useState(0);
 
+    if (isHowItworks) {
+        return (
+            <>
+                <Header />
+                <HowItWorks onLeftClick={() => {setTabIndex(0);setIsHowItWorks(false);}} onRightClick={() => {setTabIndex(1);setIsHowItWorks(false);}} />
+            </>
+        );
+    }
+
 
     return <>
         <Header />
-        <HowItWorksButton />
+        <HowItWorksButton onClick={setIsHowItWorks} />
         <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />
             <Box textAlign="left" fontSize="16px" fontFamily={Config.fontB}>
@@ -143,7 +154,7 @@ export default function Main() {
                             fontSize="24px"
                             color="black"
                         >
-                            @OakCommunities
+                            @oakcommunities
                         </Text> if you win.
                     </Step>
                  </>
@@ -166,7 +177,7 @@ export default function Main() {
                  </>
                )}
             </Box>
-            <Tabs onChange={(index) => setTabIndex(index)} marginTop="30px">
+            <Tabs index={tabIndex} onChange={(index) => setTabIndex(index)} marginTop="30px">
                 <TabList fontFamily={Config.fontA} fontWeight="bolder" lineHeight="39.2px" borderColor='#75615A'>
                     <Tab fontSize="32px" _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Claim Oak</Tab>
                     <Tab fontSize="32px"  _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Welcome Oak</Tab>

@@ -43,7 +43,7 @@ export default function Header() {
         position="relative"
     >
         <Box zIndex={150} height="120px">
-            <Img src={OakButton.src} height="100%" />
+            <Img src={OakButton.src} height="100%"  />
         </Box>
 
         <SocialBtn image={twitterBtnImage.src} position="absolute" right="240px" top={socialButtonTopOffset} url='https://twitter.com/OakParadiseNFT' />
