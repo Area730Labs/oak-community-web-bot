@@ -49,7 +49,7 @@ export default function Header() {
         <SocialBtn image={twitterBtnImage.src} position="absolute" right="240px" top={socialButtonTopOffset} url='https://twitter.com/OakParadiseNFT' />
         <SocialBtn image={discordBtnImage.src} position="absolute" right="300px" top={socialButtonTopOffset} url='https://discord.gg/oakdystopia' />
 
-        <MultiButton/>
+        <MultiButton>Connect Wallet</MultiButton>
 
         
     </Box>
