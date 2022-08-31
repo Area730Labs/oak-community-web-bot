@@ -187,10 +187,10 @@ const Admin: NextPage = () => {
                                 <Box backgroundColor={elem['is_over'] ? "grey" : "green"} width="10px" height="10px" borderRadius="5px"/>
                             </Td>
                             <Td>{elem['nft_name']}</Td>
-                            <Td><a href={elem['tweet_url']} target="_blank">{elem['tweet_url'].replace('https://', '').substring(0, 20) + '...'}</a></Td>
+                            <Td><a href={elem['tweet_url']} target="_blank" rel="noreferrer">{elem['tweet_url'].replace('https://', '').substring(0, 20) + '...'}</a></Td>
                             <Td>
                                 {elem['winner'] && (
-                                    <a href={"https://twitter.com/" + elem['winner']} target="_blank">@{elem['winner']}</a>
+                                    <a href={"https://twitter.com/" + elem['winner']} target="_blank"  rel="noreferrer">@{elem['winner']}</a>
                                 )}
                                 {!elem['winner'] && (
                                     "-"
