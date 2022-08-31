@@ -40,6 +40,9 @@ export default function Main() {
 
     const [items, setItems] = useState<OakRaidRequest[]>([]);
 
+    const [forceUpdate, setForceUpdate] = useState(false);
+
+
     const publicNode = useMemo(() => {
         return new Connection('https://api.mainnet-beta.solana.com');
     }, [])
@@ -69,11 +72,10 @@ export default function Main() {
             setWalletMints([]);
             setTokenChanges(tokensChanges + 1);
         }
-    }, [publicNode, connected])
+    }, [publicNode, connected, forceUpdate])
 
     const [curMint, setCurMint] = useState('');
 
-    const [forceUpdate, setForceUpdate] = useState(false);
 
     useEffect(() => {
         if (walletMints.length > 0) {
