@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <>
             <ChakraProvider theme={theme}>
                 <ConnectionProvider endpoint={endpoint}>
-                    <WalletProvider wallets={wallets} >
+                    <WalletProvider wallets={wallets} autoConnect>
                         <WalletModalProvider>
                             <Component {...pageProps} />
                         </WalletModalProvider>
