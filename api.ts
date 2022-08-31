@@ -28,14 +28,14 @@ class Api {
 
     private host: string = Config.apiBaseUrl;
 
-    constructor() {}
+    constructor() { }
 
-    async get_unclaimed_mints(wallet:PublicKey, mints : string[]): Promise<any> {
+    async get_unclaimed_mints(wallet: PublicKey, mints: string[]): Promise<any> {
 
         try {
-            let result = await this.sendRequest("post", `get_unclaimed_oaks`,{
-                wallet : wallet.toString(),
-                mints : mints,
+            let result = await this.sendRequest("post", `get_unclaimed_oaks`, {
+                wallet: wallet.toString(),
+                mints: mints,
             });
 
             return result;
@@ -48,17 +48,30 @@ class Api {
 
         try {
             let result = await this.sendRequest("get", `get_oak_raid_requests`);
+
+            let itemsArr = [];
+
+            for (const item of result) {
+                try {
+                    if (!item.is_over) {
+                        itemsArr.push(item);
+                    }
+                } catch (e) {
+                    console.log('got an issue with some item', item)
+                }
+            }
+
             return result;
         } catch (e) {
             throw e;
         }
     }
 
-    async claim_oak(form : ClaimOakForm, signature : string): Promise<any> {
+    async claim_oak(form: ClaimOakForm, signature: string): Promise<any> {
 
         try {
-            let result = await this.sendRequest("post", `claim_oak`,{
-                data : form,
+            let result = await this.sendRequest("post", `claim_oak`, {
+                data: form,
                 signature
             });
 
@@ -93,18 +106,18 @@ class Api {
 }
 
 export interface ClaimOakForm {
-        wallet : string
-        mint: string,
-        tweet_url: string
+    wallet: string
+    mint: string,
+    tweet_url: string
 }
 
 export interface OakRaidRequest {
     tweet_url: string,
     price: number,
-    nft_name : string,
+    nft_name: string,
     image_url: string,
     tx_sig: string,
-    claim_time: number, 
+    claim_time: number,
     is_over: boolean
 }
 

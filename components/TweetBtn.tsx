@@ -15,6 +15,9 @@ export default function TweetBtn(props: any) {
         borderRadius="10px"
         border="1px solid #1D1F1D"
         cursor="pointer"
+        onClick={() => {
+            window.open(props.link,"_blank")
+        }}
         {...props}
     >
         <Box width="25px" height="20px" flex="none" order="0" flexGrow="0">

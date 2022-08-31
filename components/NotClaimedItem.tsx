@@ -28,16 +28,21 @@ export default function NotClaimedItem(props: { children?: ReactNode, item: NotC
         };
 
         (async () => {
-            const message = new TextEncoder().encode(JSON.stringify(form));
-            const signature = await signMessage(message);
-            const sigb64 = Buffer.from(signature).toString('base64');
 
-            const api = new Api();
-            api.claim_oak(form, sigb64).then((resp) => {
-                toast.info('sent claim request');
-            }).catch(e => {
-                toast.error('error: ' + e.message);
-            })
+            try {
+                const message = new TextEncoder().encode(JSON.stringify(form));
+                const signature = await signMessage(message);
+                const sigb64 = Buffer.from(signature).toString('base64');
+
+                const api = new Api();
+                api.claim_oak(form, sigb64).then((resp) => {
+                    toast.info('sent claim request');
+                }).catch(e => {
+                    toast.error('error: ' + e.message);
+                })
+            } catch (e) {
+                toast.warn("Sign request rejected")
+            }
 
         })()
     }

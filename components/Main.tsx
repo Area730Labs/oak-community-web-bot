@@ -18,8 +18,9 @@ import { HowItWorksButton } from "./HowItWorks";
 import { Connection } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
-import Api from "../api";
+import Api, { OakRaidRequest } from "../api";
 import NotClaimedItem, { NotClaimedItemInterface } from "./NotClaimedItem";
+import { toast } from "react-toastify";
 
 export interface ApiRespItemCondensed {
     mint: string,
@@ -37,7 +38,7 @@ export default function Main() {
     const [notClaimedItems, setNotClaimedItems] = useState<ApiRespItemCondensed[]>([]);
     const [unclaimedChanges, setUnclaimedChanges] = useState(0);
 
-    const [items, setItems] = useState<WelcomeItem[]>([]);
+    const [items, setItems] = useState<OakRaidRequest[]>([]);
 
     const publicNode = useMemo(() => {
         return new Connection('https://api.mainnet-beta.solana.com');
@@ -99,28 +100,10 @@ export default function Main() {
     useEffect(() => {
         const api = new Api();
         api.get_oak_raid_requests().then((items) => {
-
-            let itemsArr = [];
-
-            for (const item of items) {
-
-                try {
-                    let it: WelcomeItem = {
-                        ImageSrc: item.image_url,
-                        id: item.nft_name.split("#")[1],
-                        tx: item.tx_sig,
-                        claimed_at: item.claim_time,
-                        bought_for: item.price
-                    }
-
-                    itemsArr.push(it);
-                } catch (e) {
-                    console.log('got an issue with some item',item)
-                }
-            }
-
-            setItems(itemsArr);
-        })
+            setItems(items);
+        }).catch((e) => {
+            toast.error('Unable to load welome oaks')
+        }) 
     })
    
     const tabContent = !connected ?

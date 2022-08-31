@@ -4,14 +4,7 @@ import { ReactNode } from "react";
 import Config from "../config";
 import TweetBtn from "./TweetBtn";
 import WelcomeOakImage from "./WelcomeOakImage";
-
-export interface WelcomeItem {
-    ImageSrc: string
-    id: string
-    tx: string
-    claimed_at: number
-    bought_for: number
-}
+import { OakRaidRequest } from "../api";
 
 export function RowTextColumn(props: any) {
 
@@ -38,7 +31,7 @@ function TxLink(props: {tx: string}) {
     return <Link href={linkHref}>{linkText}...</Link>
 }
 
-export default function WelcomeOakRow(props: { children?: ReactNode, item: WelcomeItem }) {
+export default function WelcomeOakRow(props: { children?: ReactNode, item: OakRaidRequest }) {
 
     return <Box
         boxSizing="border-box"
@@ -51,12 +44,12 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: Welco
         height="120px"
         position="relative"
     >
-        <WelcomeOakImage src={props.item.ImageSrc} />
-        <RowTextColumn left="135px">#{props.item.id}</RowTextColumn>
-        <RowTextColumn left="224px"><TxLink tx={props.item.tx}/></RowTextColumn>
-        <RowTextColumn left="350px"><Moment unix fromNow>{props.item.claimed_at}</Moment></RowTextColumn>
-        <RowTextColumn left="480px">{props.item.bought_for} SOL</RowTextColumn>
-        <TweetBtn position="absolute" left="calc(50% - 182px/2 + 269px)" top="28.33%" fontSize="12px" />
+        <WelcomeOakImage src={props.item.image_url} />
+        <RowTextColumn left="135px">#{props.item.nft_name}</RowTextColumn>
+        <RowTextColumn left="224px"><TxLink tx={props.item.tx_sig}/></RowTextColumn>
+        <RowTextColumn left="350px"><Moment unix fromNow>{props.item.claim_time}</Moment></RowTextColumn>
+        <RowTextColumn left="480px">{props.item.price} SOL</RowTextColumn>
+        <TweetBtn position="absolute" left="calc(50% - 182px/2 + 269px)" top="28.33%" fontSize="12px" link={props.item.tweet_url} />
     </Box>
 
 }
