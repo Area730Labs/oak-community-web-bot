@@ -13,6 +13,7 @@ import { MultiButton } from "./MultiBtn";
 const socialButtonTopOffset = "38px";
 
 export default function Header() {
+    
     const { connecting, connect, publicKey, connected, signMessage, disconnect } = useWallet();
 
 

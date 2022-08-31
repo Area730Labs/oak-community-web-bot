@@ -13,7 +13,7 @@ export interface WelcomeItem {
     bought_for: number
 }
 
-function RowTextColumn(props: any) {
+export function RowTextColumn(props: any) {
 
     let { children, ...rest } = props;
 
@@ -50,7 +50,6 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: Welco
         _even={{backgroundColor:"#9CB795"}}
         height="120px"
         position="relative"
-
     >
         <WelcomeOakImage src={props.item.ImageSrc} />
         <RowTextColumn left="135px">#{props.item.id}</RowTextColumn>

@@ -11,6 +11,9 @@ export default function WelcomeOakImage(props: { src: string }) {
         left="1.97%"
         top="12.5%"
         bottom="12.5%"
+        borderRadius="6px"
+        overflow="hidden"
+        
     >
         <Img src={props.src} />
     </Box>

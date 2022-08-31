@@ -27,8 +27,6 @@ export function HowItWorksButton() {
 }
 
 export default function HowItWorks() {
-
-
     return <>
         <Box width="850px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />

@@ -1,7 +1,7 @@
 import { Box, Container, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletConnectButton } from "@solana/wallet-adapter-react-ui";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Config from "../config";
 import titleTextImage from '../images/welcome_to_paradise.png';
 import Step from "./Step";
@@ -15,43 +15,83 @@ import topLeftImg from '../images/top_left.png';
 import topRightImg from '../images/top_right.png';
 import Header from "./Header";
 import { HowItWorksButton } from "./HowItWorks";
+import { Connection } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
+import Api from "../api";
+import NotClaimedItem, { NotClaimedItemInterface } from "./NotClaimedItem";
+
+export interface ApiRespItemCondensed {
+    mint: string,
+    data: any
+}
 
 export default function Main() {
 
     const { connecting, publicKey, connected, signMessage } = useWallet();
     const [nfts, setNfts] = useState([]);
 
-    if (connected && signMessage != null) {
+    const [tokensChanges, setTokenChanges] = useState(0);
+    const [walletMints, setWalletMints] = useState<string[]>([]);
 
-        const obj = {
-            "wallet": publicKey?.toBase58(),
-            "row_id": 7
-        };
+    const [notClaimedItems, setNotClaimedItems] = useState<ApiRespItemCondensed[]>([]);
+    const [unclaimedChanges, setUnclaimedChanges] = useState(0);
+    const publicNode = useMemo(() => {
+        return new Connection('https://api.mainnet-beta.solana.com');
+    }, [])
 
-        const message = new TextEncoder().encode(JSON.stringify(obj));
+    useMemo(async () => {
+        if (connected && publicNode != null) {
 
-        (async function () {
-            try {
-                const signature = await signMessage(message);
-                const base64str = Buffer.from(signature).toString('base64');
-                console.log(base64str)
-            } catch (e) {
-                console.warn(`unable to sign a message : ${e.message}`)
+            let tokens = await publicNode.getParsedTokenAccountsByOwner(publicKey, {
+                programId: TOKEN_PROGRAM_ID,
+            })
+
+            var result = [];
+
+            for (const tokenInfo of tokens.value) {
+
+                const tokenInfoParsed = tokenInfo.account.data.parsed.info;
+                const tokenAm = tokenInfoParsed.tokenAmount;
+
+                if (tokenAm.uiAmount == 1 && tokenAm.decimals == 0) {
+                    result.push(tokenInfoParsed.mint);
+                }
             }
-        })()
-    }
-    // if (publicKey) {
-    //   const fetchNfts = async () => {
-    //     const nftArray = await getParsedNftAccountsByOwner({
-    //       publicAddress,
-    //     });
 
-    //     console.log(nftArray);
-    //   };
+            setWalletMints(result);
+            setTokenChanges(tokensChanges + 1);
 
-    //   fetchNfts();
-    // }
+        } else {
+            setWalletMints([]);
+            setTokenChanges(tokensChanges + 1);
+        }
+    }, [publicNode, connected])
+
+    useMemo(() => {
+        if (walletMints.length > 0) {
+            const api = new Api();
+            api.get_unclaimed_mints(publicKey, walletMints).then((respdata) => {
+
+
+                let arr: ApiRespItemCondensed[] = [];
+                for (var key in respdata) {
+
+                    const item = respdata[key];
+                    arr.push({
+                        mint: key,
+                        data: item.data
+                    });
+                }
+
+                setNotClaimedItems(arr)
+                setUnclaimedChanges(unclaimedChanges + 1);
+
+            }).catch((e) => {
+                console.error('unable to get unclaimed mints response : ', e.message)
+            })
+        }
+    }, [tokensChanges]);
 
     const defaultWelcomeItem: WelcomeItem = {
         ImageSrc: DefaultNftImage.src,
@@ -73,7 +113,16 @@ export default function Main() {
     const tabContent = !connected ?
         <Text color="#1D1F1D" fontFamily={Config.fontB} fontSize={18}>Please connect your wallet</Text> :
         <>
-            <Text>Connected</Text>
+            {notClaimedItems.length > 0 ? (notClaimedItems.map((it, key) => {
+
+                const item: NotClaimedItemInterface = {
+                    ImageSrc: it.data.image,
+                    id: it.data.name.split("#")[1],
+                    mint: it.mint
+                };
+
+                return <NotClaimedItem key={key} item={item} />
+            })) : <Text>No items to claim</Text>}
         </>;
 
     return <>

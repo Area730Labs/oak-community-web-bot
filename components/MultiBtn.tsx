@@ -1,7 +1,7 @@
-import {useWallet} from '@solana/wallet-adapter-react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import type { FC } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { WalletIcon, WalletConnectButton, useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { WalletIcon, WalletConnectButton, useWalletModal, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { WalletModalButton } from '@solana/wallet-adapter-react-ui';
 import { Button, position } from '@chakra-ui/react';
 import { Box, Text, Img } from '@chakra-ui/react';
@@ -9,7 +9,13 @@ import ConnectWalletBtnImage from "../images/connect_wallet_btn.svg";
 import Config from '../config';
 
 export const MultiButton = () => {
-    const { publicKey, wallet, disconnect } = useWallet();
+
+    return <Box position="relative">
+        <WalletMultiButton/>;
+    </Box>
+
+
+    const { publicKey, wallet, disconnect, connecting, connected } = useWallet();
 
     const [copied, setCopied] = useState(false);
     const [active, setActive] = useState(false);
@@ -17,7 +23,7 @@ export const MultiButton = () => {
     const { visible, setVisible } = useWalletModal();
 
     const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
-   
+
 
     const copyAddress = useCallback(async () => {
         if (base58) {
@@ -62,8 +68,6 @@ export const MultiButton = () => {
     // if (!wallet) return <WalletModalButton ></WalletModalButton>;
     // if (!base58) return <WalletConnectButton ></WalletConnectButton>;
 
-    const { connecting, connect, connected, signMessage } = useWallet();
-
 
     let btnLabel = "CONNECT WALLET";
     if (connecting) {
@@ -93,9 +97,9 @@ export const MultiButton = () => {
                 <Text as="span" textAlign="center" fontFamily={Config.fontA} fontSize="30px" color="white" position="absolute" top="36px" width="140px" right="24px">
                     {btnLabel}
                 </Text>
-            </Box> 
+            </Box>
 
-             <ul
+            <ul
                 aria-label="dropdown-list"
                 className={`wallet-adapter-dropdown-list ${active && 'wallet-adapter-dropdown-list-active'}`}
                 ref={ref}
@@ -117,6 +121,6 @@ export const MultiButton = () => {
                 </li>
             </ul>
         </>
-        
+
     );
 };
