@@ -155,7 +155,7 @@ const Admin: NextPage = () => {
 
     return (
         <>
-        <Modal isOpen={isOpen} isCentered size='xs'>
+        <Modal onClose={null} isOpen={isOpen} isCentered size='xs'>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader textAlign="center">Working...</ModalHeader>

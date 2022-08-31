@@ -1,12 +1,10 @@
-import { Box, Container, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletConnectButton } from "@solana/wallet-adapter-react-ui";
 import { useEffect, useMemo, useState } from "react";
 import Config from "../config";
 import titleTextImage from '../images/welcome_to_paradise.png';
 import Step from "./Step";
-import WelcomeOakRow, { WelcomeItem } from "./WelcomeOakRow";
-import DefaultNftImage from "../images/nft_image_1.png";
+import WelcomeOakRow from "./WelcomeOakRow";
 import bottomRightImg from '../images/bottom_right.png';
 import bottomRightSkullImg from '../images/bottom_right_skull.png';
 import bottomLefttImg from '../images/bottom_left_tree.png';

@@ -1,6 +1,6 @@
-import { Box, Img, Text } from "@chakra-ui/react";
+import { Box, ChakraProps, Img, Text } from "@chakra-ui/react";
 
-export interface SocialBtnProps {
+export interface SocialBtnProps extends ChakraProps {
     image: string
 }
 
