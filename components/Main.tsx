@@ -119,30 +119,54 @@ export default function Main() {
             })) : <Text>No items to claim</Text>}
         </>;
 
+        const [tabIndex, setTabIndex] = useState(0);
+
+
     return <>
         <Header />
         <HowItWorksButton />
         <Box width="760px" textAlign="center" margin="0 auto" className="main-overlay-c">
             <Img src={titleTextImage.src} />
             <Box textAlign="left" fontSize="16px" fontFamily={Config.fontB}>
-                <Step idx={1}>
-                    Like, retweet, reply and follow a new Oak’s twitter post.
-                </Step>
-                <Step idx={2}>
-                    We’ll pick the most creative, kind, or funny replies to win 33.3 Sol each.
-                </Step>
-                <Step idx={3}>
-                    You will be tagged by <Text
-                        as="span"
-                        fontFamily={Config.fontA}
-                        fontSize="24px"
-                        color="black"
-                    >
-                        @OaksCommunity
-                    </Text> if you win.
-                </Step>
+               {tabIndex == 1 && (
+                 <>
+                    <Step idx={1}>
+                        Welcome a new Oak Paradise community member by liking, retweeting and replying to their post.
+                    </Step>
+                    <Step idx={2}>
+                        Our team is going to pick the most creative, unique and funny coments to win 3 sol per day.
+                    </Step>
+                    <Step idx={3}>
+                        You will be tagged by <Text
+                            as="span"
+                            fontFamily={Config.fontA}
+                            fontSize="24px"
+                            color="black"
+                        >
+                            @OakCommunities
+                        </Text> if you win.
+                    </Step>
+                 </>
+               )}
+
+                {tabIndex == 0 && (
+                 <>
+                    <Step idx={1}>
+                        Connect your Solana wallet
+                    </Step>
+                    <Step idx={2}>
+                        Claim your proof of purchase
+                    </Step>
+                    <Step idx={3}>
+                        Link a tweet
+                    </Step>
+                    <Step idx={4}>
+                        Enjoy your twitter fame
+                    </Step>
+                 </>
+               )}
             </Box>
-            <Tabs>
+            <Tabs onChange={(index) => setTabIndex(index)} marginTop="30px">
                 <TabList fontFamily={Config.fontA} fontWeight="bolder" lineHeight="39.2px" borderColor='#75615A'>
                     <Tab fontSize="32px" _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Claim Oak</Tab>
                     <Tab fontSize="32px"  _active={{backgroundColor: 'none'}} _selected={{color: "#1D1F1D", borderColor: '#372C29'}} color="#3C4A3E">Welcome Oak</Tab>
