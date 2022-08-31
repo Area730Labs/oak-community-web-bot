@@ -33,6 +33,9 @@ function TxLink(props: {tx: string}) {
 
 export default function WelcomeOakRow(props: { children?: ReactNode, item: OakRaidRequest }) {
 
+
+    let itemId = props.item.nft_name.split("#")[1];
+
     return <Box
         boxSizing="border-box"
         backgroundColor="#A4BFA7"
@@ -45,7 +48,7 @@ export default function WelcomeOakRow(props: { children?: ReactNode, item: OakRa
         position="relative"
     >
         <WelcomeOakImage src={props.item.image_url} />
-        <RowTextColumn left="135px">#{props.item.nft_name}</RowTextColumn>
+        <RowTextColumn left="135px">#{itemId}</RowTextColumn>
         <RowTextColumn left="224px"><TxLink tx={props.item.tx_sig}/></RowTextColumn>
         <RowTextColumn left="350px"><Moment unix fromNow>{props.item.claim_time}</Moment></RowTextColumn>
         <RowTextColumn left="480px">{props.item.price} SOL</RowTextColumn>
