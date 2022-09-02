@@ -261,7 +261,8 @@ export default function Main() {
                 </TabPanels>
             </Tabs>
 
-            <Flex alignItems='center' marginBottom='25px' marginTop='10px' justifyContent='center'>
+            {tabIndex == 1 && (
+                <Flex alignItems='center' marginBottom='25px' marginTop='10px' justifyContent='center'>
                 <Box className="btn-wrap">
                     {pageIndex > 0 && (
                         <Box className="prev-page-btn"  onClick={onPrevPage} />
@@ -273,6 +274,8 @@ export default function Main() {
                     )}
                 </Box>
             </Flex>
+            )}
+            
 
         </Box>
 
