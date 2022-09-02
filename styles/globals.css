@@ -93,3 +93,28 @@ a {
 .send-btn {
   background-image: url(/img/send_btn.svg);
 }
+
+.next-page-btn {
+  background-image: url(/img/next_btn.svg);
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 123px;
+  height: 55px;
+  cursor: pointer;
+}
+
+.prev-page-btn {
+  background-image: url(/img/prev_btn.svg);
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 123px;
+  height: 55px;
+  cursor: pointer;
+
+}
+
+.btn-wrap {
+  width: 123px;
+  height: 55px;
+  display: inline-block;
+}

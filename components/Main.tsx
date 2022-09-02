@@ -1,4 +1,4 @@
-import { Box, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Img, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack, Flex } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useMemo, useState } from "react";
 import Config from "../config";
@@ -39,7 +39,7 @@ export default function Main() {
     const [unclaimedChanges, setUnclaimedChanges] = useState(0);
 
     const [items, setItems] = useState<OakRaidRequest[]>([]);
-
+    const [pageIndex, setPageIndex] = useState(0);
     const [forceUpdate, setForceUpdate] = useState(false);
 
 
@@ -95,6 +95,7 @@ export default function Main() {
 
                 setNotClaimedItems(arr)
                 setUnclaimedChanges(unclaimedChanges + 1);
+                setPageIndex(0);
 
             }).catch((e) => {
                 console.error('unable to get unclaimed mints response : ', e.message)
@@ -176,6 +177,25 @@ export default function Main() {
     };
 
 
+    const PAGE_COUNT = 5;
+    
+    const maxPage = Math.ceil(items.length / PAGE_COUNT);
+    const fromIndex = PAGE_COUNT * pageIndex;
+    let toIndex = fromIndex + PAGE_COUNT;
+    if (toIndex > items.length) {
+        toIndex = items.length;
+    }
+
+    let page_items = items.slice(fromIndex, toIndex);
+
+    const onNextPage = () => {
+        setPageIndex(pageIndex + 1);
+    };
+
+    const onPrevPage = () => {
+        setPageIndex(pageIndex - 1);
+    };
+
     return <>
         <Header />
         <SubmitClaimModal isOpen={isOpen} onClose={onClose} onSubmit={claimHandler}/>
@@ -233,13 +253,26 @@ export default function Main() {
                     </TabPanel>
                     <TabPanel paddingX={0}>
                         <VStack spacing={4}>
-                            {items.map((it, idx) => {
-                                return <WelcomeOakRow key={idx} item={it} />
+                            {page_items.map((it, idx) => {
+                                return <WelcomeOakRow key={it.image_url} item={it} />
                             })}
                         </VStack>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+
+            <Flex alignItems='center' marginBottom='25px' marginTop='10px' justifyContent='center'>
+                <Box className="btn-wrap">
+                    {pageIndex > 0 && (
+                        <Box className="prev-page-btn"  onClick={onPrevPage} />
+                    )}
+                </Box>
+                <Box className="btn-wrap" marginLeft='30px'>
+                {pageIndex < maxPage && (
+                        <Box className="next-page-btn" onClick={onNextPage} />
+                    )}
+                </Box>
+            </Flex>
 
         </Box>
 
